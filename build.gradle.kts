@@ -28,8 +28,7 @@ dependencies {
     implementation("io.github.microutils", "kotlin-logging", "2.0.4")
 
     // DI
-    val kodeinVersion = "7.3.1"
-    implementation("org.kodein.di", "kodein-di-generic-jvm", kodeinVersion)
+    implementation("org.kodein.di", "kodein-di-jvm", "7.3.1")
 
     // database
     implementation("org.postgresql", "postgresql", "42.2.2")

@@ -8,4 +8,3 @@ LICENSE
 out
 Dockerfile
 docker-compose.yml
-integrationTests
