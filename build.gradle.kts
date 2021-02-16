@@ -8,7 +8,7 @@ plugins {
 group = "com.wire.integrations.hold"
 version = versioning.info?.tag ?: versioning.info?.lastTag ?: "development"
 
-val mClass = "com.wire.integrations.hold.exports"
+val mClass = "com.wire.integrations.hold.exports.MainKt"
 
 application {
     mainClass.set(mClass)
