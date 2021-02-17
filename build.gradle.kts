@@ -24,6 +24,11 @@ dependencies {
     // extension functions
     implementation("pw.forst.tools", "katlib", "1.2.1")
 
+    // Jackson JSON
+    val jacksonVersion = "2.12.1"
+    implementation("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonVersion)
+
     // logging
     implementation("io.github.microutils", "kotlin-logging", "2.0.4")
 
@@ -38,6 +43,10 @@ dependencies {
     implementation("org.jetbrains.exposed", "exposed-dao", exposedVersion)
     implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
     implementation("org.jetbrains.exposed", "exposed-java-time", exposedVersion)
+
+    val coroutinesVersion = "1.4.2"
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", coroutinesVersion)
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm", coroutinesVersion)
 }
 
 tasks {
