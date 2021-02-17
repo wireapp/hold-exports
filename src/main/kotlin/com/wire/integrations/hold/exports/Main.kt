@@ -1,5 +1,9 @@
 package com.wire.integrations.hold.exports
 
 fun main() {
-    print("Hello World")
+    ExecutorLoop()
+        .scheduleRunnableForMinutes(1) {
+            println("Hello world")
+        }
+    // we can leave this thread to terminate
 }
