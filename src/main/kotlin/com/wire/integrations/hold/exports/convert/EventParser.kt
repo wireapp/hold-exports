@@ -1,4 +1,4 @@
-package com.wire.integrations.hold.exports.parser
+package com.wire.integrations.hold.exports.convert
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wire.integrations.hold.exports.dto.ConversationEvent

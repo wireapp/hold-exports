@@ -1,4 +1,4 @@
-package com.wire.integrations.hold.exports.parser
+package com.wire.integrations.hold.exports.convert
 
 import com.wire.integrations.hold.exports.di
 import com.wire.integrations.hold.exports.dto.RawEvent

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.wire.integrations.hold.exports.convert.EventParser
 import com.wire.integrations.hold.exports.dao.RawEventsRepository
 import com.wire.integrations.hold.exports.dto.DatabaseConfiguration
-import com.wire.integrations.hold.exports.parser.EventParser
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.instance
