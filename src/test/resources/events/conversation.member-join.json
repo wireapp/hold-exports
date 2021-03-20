@@ -1,0 +1,13 @@
+{
+  "id": "ffad9ed2-2f25-11eb-8001-22000a0868f5",
+  "type": "conversation.member-join",
+  "time": "2020-11-25T13:56:21.457Z",
+  "from": "6aac9111-7fd2-42cf-ae76-9950a4544aee",
+  "conversation": {
+    "id": "87c9843c-d2ac-4c5e-a33a-3b5d2c659136"
+  },
+  "convId": "87c9843c-d2ac-4c5e-a33a-3b5d2c659136",
+  "users": [
+    "6aac9111-7fd2-42cf-ae76-9950a4544aee"
+  ]
+}

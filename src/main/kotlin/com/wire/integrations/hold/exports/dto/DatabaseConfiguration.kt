@@ -1,4 +1,4 @@
-package com.wire.integrations.hold.exports.utils
+package com.wire.integrations.hold.exports.dto
 
 /**
  * Simple configuration for the database connection.

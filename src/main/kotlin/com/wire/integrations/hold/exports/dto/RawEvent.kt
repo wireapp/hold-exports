@@ -1,13 +1,12 @@
-package com.wire.integrations.hold.exports.dao
+package com.wire.integrations.hold.exports.dto
 
-import com.fasterxml.jackson.databind.JsonNode
-import java.time.LocalDateTime
+import java.time.Instant
 import java.util.UUID
 
 /**
  * Unprocessed event from the Legal Hold database.
  */
-data class RawEventDto(
+data class RawEvent(
     /**
      * ID of the message in the Wire.
      */
@@ -25,9 +24,9 @@ data class RawEventDto(
     /**
      * The message itself as JSON.
      */
-    val payload: JsonNode,
+    val payload: String,
     /**
      * Time when the message was put to the database.
      */
-    val time: LocalDateTime
+    val time: Instant
 )

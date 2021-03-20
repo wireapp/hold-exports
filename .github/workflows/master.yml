@@ -3,11 +3,10 @@ name: Staging Deployment
 on:
   push:
     branches:
-      - staging
+      - master
 
 env:
-  DOCKER_IMAGE: wire-bot/poll
-  SERVICE_NAME: polls
+  DOCKER_IMAGE: wire-bot/hold-exporter
 
 jobs:
   publish:
@@ -50,42 +49,12 @@ jobs:
           build-args: |
             release_version=${{ env.RELEASE_VERSION }}
 
-      # Setup gcloud CLI
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          service_account_email: kubernetes-deployment-agent@wire-bot.iam.gserviceaccount.com
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: wire-bot
-          export_default_credentials: true
-
-      # Configure Docker to use the gcloud command-line tool
-      - name: Configure Docker Google cloud
-        run: |
-          gcloud --quiet auth configure-docker
-
-      # Get the GKE credentials so we can deploy to the cluster
-      - name: Obtain k8s credentials
-        env:
-          GKE_CLUSTER: dagobah
-          GKE_ZONE: europe-west1-c
-        run: |
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-
-      # K8s is set up, deploy the app
-      - name: Deploy the Service
-        env:
-          SERVICE: ${{ env.SERVICE_NAME }}
-        run: |
-          kubectl delete pod -l app=$SERVICE -n staging
-          kubectl describe pod -l app=$SERVICE -n staging
-
       # Send webhook to Wire using Slack Bot
       - name: Webhook to Wire
         uses: 8398a7/action-slack@v2
         with:
           status: ${{ job.status }}
-          author_name: ${{ env.SERVICE_NAME }} staging pipeline
+          author_name: Legal Hold Exporter Master Docker
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.WEBHOOK_CI }}
         # Send message only if previous step failed

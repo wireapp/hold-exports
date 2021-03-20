@@ -1,0 +1,13 @@
+{
+  "id": "f4c91e12-7609-11eb-8001-22000a265c49",
+  "type": "conversation.member-leave",
+  "time": "2021-02-23T19:04:29.835Z",
+  "from": "b28c68f0-bd92-448c-8fbb-cb5bd869a983",
+  "conversation": {
+    "id": "e23465e7-7a54-4342-92ac-4bd78b71e53b"
+  },
+  "convId": "e23465e7-7a54-4342-92ac-4bd78b71e53b",
+  "users": [
+    "b28c68f0-bd92-448c-8fbb-cb5bd869a983"
+  ]
+}

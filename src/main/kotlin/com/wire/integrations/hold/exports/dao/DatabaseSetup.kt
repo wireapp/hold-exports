@@ -1,6 +1,6 @@
 package com.wire.integrations.hold.exports.dao
 
-import com.wire.integrations.hold.exports.utils.DatabaseConfiguration
+import com.wire.integrations.hold.exports.dto.DatabaseConfiguration
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.transaction
 

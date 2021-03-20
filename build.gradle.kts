@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.4.30"
+    kotlin("jvm") version "1.4.31"
     application
     distribution
     id("net.nemerosa.versioning") version "2.14.0"
@@ -28,15 +28,17 @@ dependencies {
     val jacksonVersion = "2.12.1"
     implementation("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin", jacksonVersion)
+    implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jacksonVersion)
 
     // logging
     implementation("io.github.microutils", "kotlin-logging", "2.0.4")
+    implementation("ch.qos.logback", "logback-classic", "1.3.0-alpha5")
 
     // DI
-    implementation("org.kodein.di", "kodein-di-jvm", "7.3.1")
+    implementation("org.kodein.di", "kodein-di-jvm", "7.4.0")
 
     // database
-    implementation("org.postgresql", "postgresql", "42.2.2")
+    implementation("org.postgresql", "postgresql", "42.2.19")
 
     val exposedVersion = "0.29.1"
     implementation("org.jetbrains.exposed", "exposed-core", exposedVersion)
@@ -44,9 +46,16 @@ dependencies {
     implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
     implementation("org.jetbrains.exposed", "exposed-java-time", exposedVersion)
 
-    val coroutinesVersion = "1.4.2"
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", coroutinesVersion)
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm", coroutinesVersion)
+    // tests
+    testImplementation("io.mockk", "mockk", "1.10.6")
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
+
+    val junitVersion = "5.7.1"
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion) // junit testing framework
+    testImplementation("org.junit.jupiter", "junit-jupiter-params", junitVersion) // generated parameters for tests
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion)
+
 }
 
 tasks {
