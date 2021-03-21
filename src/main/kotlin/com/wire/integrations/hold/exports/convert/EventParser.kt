@@ -21,22 +21,22 @@ class EventParser(
             "conversation.otr-message-add.new-text" to ConversationEvent.OtrEvent.Text.NewText::class,
             "conversation.otr-message-add.edit-text" to ConversationEvent.OtrEvent.Text.EditText::class,
             // assets
-            "conversation.otr-message-add.new-attachment" to ConversationEvent.OtrEvent.Asset.NewAttachment::class,
-            "conversation.otr-message-add.new-audio" to ConversationEvent.OtrEvent.Asset.NewAudio::class,
             "conversation.otr-message-add.new-image" to ConversationEvent.OtrEvent.Asset.NewImage::class,
-            "conversation.otr-message-add.new-video" to ConversationEvent.OtrEvent.Asset.NewVideo::class
+            "conversation.otr-message-add.new-attachment" to ConversationEvent.OtrEvent.Asset.NamedAsset.NewAttachment::class,
+            "conversation.otr-message-add.new-audio" to ConversationEvent.OtrEvent.Asset.NamedAsset.NewAudio::class,
+            "conversation.otr-message-add.new-video" to ConversationEvent.OtrEvent.Asset.NamedAsset.NewVideo::class
         )
     }
 
     /**
      * Parses collection of [events] and returns those that was parsed without errors.
      */
-    fun parse(events: Iterable<RawEvent>) = events.mapNotNull { parse(it) }
+    fun parse(events: Iterable<RawEvent>): List<ConversationEvent> = events.mapNotNull { parse(it) }
 
     /**
      * Parse single [RawEvent], returns null if something goes wrong.
      */
-    fun parse(event: RawEvent) = runCatching { parseEventUnsafe(event) }
+    fun parse(event: RawEvent): ConversationEvent? = runCatching { parseEventUnsafe(event) }
         .onFailure {
             logger.warn { "Could not parse event ${it.message}. Whole event:\n${event}" }
         }.getOrNull()

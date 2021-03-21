@@ -16,6 +16,18 @@ application {
 
 repositories {
     jcenter()
+
+    // lithium
+    maven {
+        url = uri("https://packagecloud.io/dkovacevic/helium/maven2")
+    }
+    maven {
+        url = uri("https://packagecloud.io/dkovacevic/xenon/maven2")
+    }
+    maven {
+        url = uri("https://packagecloud.io/dkovacevic/cryptobox4j/maven2")
+    }
+
 }
 
 dependencies {
@@ -23,6 +35,13 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     // extension functions
     implementation("pw.forst.tools", "katlib", "1.2.1")
+
+    // ------- Wire dependencies -------
+    implementation("com.wire", "helium", "1.0-SNAPSHOT")
+    implementation("org.glassfish.jersey.inject", "jersey-hk2", "2.32")
+    implementation("org.glassfish.jersey.media", "jersey-media-json-jackson", "2.32")
+    implementation("javax.activation", "activation", "1.1.1")
+    // //----- Wire dependencies -------
 
     // Jackson JSON
     val jacksonVersion = "2.12.1"

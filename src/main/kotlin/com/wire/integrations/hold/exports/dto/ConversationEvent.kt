@@ -6,6 +6,7 @@ import java.util.UUID
 /**
  * This is quite ugly, but very efficient representation of all messages.
  */
+@Suppress("ArrayInDataClass") // native implementations, we won't be comparing them
 sealed class ConversationEvent {
     abstract val id: UUID
     abstract val convId: UUID
@@ -113,43 +114,67 @@ sealed class ConversationEvent {
 
         sealed class Asset : OtrEvent() {
             abstract val assetKey: String
+            abstract val assetToken: String?
             abstract val mimeType: String
-            abstract val otrKey: String
-            abstract val sha256: String
+            abstract val otrKey: ByteArray
+            abstract val sha256: ByteArray
             abstract val size: Long
 
-            data class NewAttachment(
-                override val messageId: UUID,
-                override val conversationId: UUID,
-                override val userId: UUID,
-                override val clientId: String,
-                override val time: Instant,
-                override val type: String = "conversation.otr-message-add.new-attachment",
-                override val assetKey: String,
-                override val mimeType: String,
-                override val otrKey: String,
-                override val sha256: String,
-                override val size: Long,
-                val assetToken: String?,
-                val name: String,
-            ) : Asset()
+            sealed class NamedAsset : Asset() {
+                abstract val name: String
 
-            data class NewAudio(
-                override val messageId: UUID,
-                override val conversationId: UUID,
-                override val userId: UUID,
-                override val clientId: String,
-                override val time: Instant,
-                override val type: String = "conversation.otr-message-add.new-audio",
-                override val assetKey: String,
-                val assetToken: String,
-                override val mimeType: String,
-                override val otrKey: String,
-                override val sha256: String,
-                override val size: Long,
-                val duration: Long,
-                val name: String
-            ) : Asset()
+                data class NewAttachment(
+                    override val messageId: UUID,
+                    override val conversationId: UUID,
+                    override val userId: UUID,
+                    override val clientId: String,
+                    override val time: Instant,
+                    override val type: String = "conversation.otr-message-add.new-attachment",
+                    override val assetKey: String,
+                    override val mimeType: String,
+                    override val otrKey: ByteArray,
+                    override val sha256: ByteArray,
+                    override val size: Long,
+                    override val assetToken: String?,
+                    override val name: String,
+                ) : NamedAsset()
+
+                data class NewAudio(
+                    override val messageId: UUID,
+                    override val conversationId: UUID,
+                    override val userId: UUID,
+                    override val clientId: String,
+                    override val time: Instant,
+                    override val type: String = "conversation.otr-message-add.new-audio",
+                    override val assetKey: String,
+                    override val assetToken: String,
+                    override val mimeType: String,
+                    override val otrKey: ByteArray,
+                    override val sha256: ByteArray,
+                    override val size: Long,
+                    override val name: String,
+                    val duration: Long,
+                ) : NamedAsset()
+
+                data class NewVideo(
+                    override val messageId: UUID,
+                    override val conversationId: UUID,
+                    override val userId: UUID,
+                    override val clientId: String,
+                    override val time: Instant,
+                    override val type: String = "conversation.otr-message-add.new-video",
+                    override val assetKey: String,
+                    override val mimeType: String,
+                    override val otrKey: ByteArray,
+                    override val sha256: ByteArray,
+                    override val size: Long,
+                    override val assetToken: String?,
+                    override val name: String,
+                    val duration: Int,
+                    val height: Int,
+                    val width: Int,
+                ) : NamedAsset()
+            }
 
             data class NewImage(
                 override val messageId: UUID,
@@ -160,30 +185,12 @@ sealed class ConversationEvent {
                 override val type: String = "conversation.otr-message-add.new-image",
                 override val assetKey: String,
                 override val mimeType: String,
-                override val otrKey: String,
-                override val sha256: String,
+                override val otrKey: ByteArray,
+                override val sha256: ByteArray,
                 override val size: Long,
+                override val assetToken: String?,
                 val height: Int,
                 val width: Int,
-            ) : Asset()
-
-            data class NewVideo(
-                override val messageId: UUID,
-                override val conversationId: UUID,
-                override val userId: UUID,
-                override val clientId: String,
-                override val time: Instant,
-                override val type: String = "conversation.otr-message-add.new-video",
-                override val assetKey: String,
-                override val mimeType: String,
-                override val otrKey: String,
-                override val sha256: String,
-                override val size: Long,
-                val assetToken: String?,
-                val duration: Int,
-                val height: Int,
-                val width: Int,
-                val name: String
             ) : Asset()
         }
     }

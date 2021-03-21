@@ -1,24 +1,14 @@
 package com.wire.integrations.hold.exports.convert
 
-import com.wire.integrations.hold.exports.di
-import com.wire.integrations.hold.exports.dto.RawEvent
+import com.wire.integrations.hold.exports.utils.DiAwareTest
+import com.wire.integrations.hold.exports.utils.prototypeEvent
 import org.junit.jupiter.api.Test
 import org.kodein.di.instance
-import java.time.Instant
-import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 
-class EventParserTest {
-
-    private val prototypeEvent = RawEvent(
-        messageId = UUID.randomUUID(),
-        conversationId = UUID.randomUUID(),
-        type = "",
-        payload = "",
-        time = Instant.EPOCH
-    )
+class EventParserTest : DiAwareTest() {
 
     @Test
     fun `test parse all messages`() {
