@@ -5,7 +5,6 @@ import com.wire.integrations.hold.exports.dto.DatabaseConfiguration
 import com.wire.integrations.hold.exports.utils.createLogger
 import org.kodein.di.DI
 import org.kodein.di.instance
-import org.kodein.di.provider
 import java.lang.Thread.sleep
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
@@ -35,16 +34,15 @@ fun main() {
 private tailrec fun runExecutor(di: DI, attemptCounts: Int = 1) {
     logger.info { "Starting executor, attempt #${attemptCounts}." }
     val delayMinutes by di.instance<Long>("executor-tasks-minutes")
+    val executorCheckTime by di.instance<Long>("executor-check-millis")
 
-    val provider by di.provider<ExecutorLoop>()
-    val executor = provider()
+    val executor by di.instance<ExecutorLoop>()
 
     runCatching {
         // schedule task
         executor.schedule(minutes = delayMinutes, name = "hello-task") {
             println("Hello world")
         }
-        val executorCheckTime by di.instance<Long>("executor-check-millis")
         // and periodically check if the executor is alive
         while (!executor.isShutdown && !executor.isTerminated) {
             sleep(executorCheckTime)
