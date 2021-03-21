@@ -32,7 +32,7 @@ class ConsoleLogExporter : Exporter {
                     .joinToString("\n") { buildStringForEvent(it) }
                 val conv = "Conversation: $conversationId"
                 val hashes = (0..conv.length).joinToString("") { "#" }
-                "${hashes}${conv}${hashes}${conversationStrings}"
+                "${hashes}\n${conv}\n${hashes}\n${conversationStrings}\n"
             }.joinToString("\n")
 
         print(stringToPrint)
