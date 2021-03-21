@@ -31,7 +31,7 @@ class ProcessingService(
             },
             errorLog = {
                 "Problem with parsing event ${it.messageId} with type ${it.type}."
-            }
+            },
         ).mapCatching(
             transform = { (rawEvent, conversationEvent) ->
                 when (conversationEvent) {

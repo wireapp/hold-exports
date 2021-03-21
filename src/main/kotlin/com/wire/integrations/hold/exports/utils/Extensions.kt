@@ -6,12 +6,18 @@ fun createLogger(name: String) = KLogging().logger("com.wire.integrations.hold.e
 
 val catchingLogger = createLogger("extensions")
 
-inline fun <T, R> Iterable<T>.mapCatching(transform: (T) -> R?, crossinline errorLog: (T) -> String): List<R> =
+inline fun <T, R> Iterable<T>.mapCatching(
+    transform: (T) -> R?,
+    crossinline errorLog: (T) -> String,
+    logStackTrace: Boolean = false
+): List<R> =
     mapNotNull { item ->
         runCatching { transform(item) }
             .onFailure {
                 catchingLogger.error { errorLog(item) }
-                catchingLogger.debug(it) { }
+                if (logStackTrace) {
+                    catchingLogger.debug(it) { }
+                }
             }
             .getOrNull()
     }
