@@ -12,6 +12,8 @@ import com.wire.integrations.hold.exports.convert.EventParser
 import com.wire.integrations.hold.exports.dao.RawEventsRepository
 import com.wire.integrations.hold.exports.dto.DatabaseConfiguration
 import com.wire.integrations.hold.exports.dto.WireCredentials
+import com.wire.integrations.hold.exports.service.ExporterService
+import com.wire.integrations.hold.exports.service.ProcessingService
 import com.wire.integrations.hold.exports.utils.JerseyClientBuilder
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -86,4 +88,7 @@ val di = DI {
 
     bind<AssetsDownloader>() with singleton { AssetsDownloader(provider()) }
     bind<AssetsFileDownloader>() with singleton { AssetsFileDownloader(instance()) }
+
+    bind<ProcessingService>() with singleton { ProcessingService(instance(), instance(), instance()) }
+    bind<ExporterService>() with singleton { ExporterService(instance(), instance(), instance()) }
 }

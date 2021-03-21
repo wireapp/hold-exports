@@ -2,6 +2,7 @@ package com.wire.integrations.hold.exports
 
 import com.wire.integrations.hold.exports.dao.DatabaseSetup
 import com.wire.integrations.hold.exports.dto.DatabaseConfiguration
+import com.wire.integrations.hold.exports.service.ExporterService
 import com.wire.integrations.hold.exports.utils.createLogger
 import org.kodein.di.DI
 import org.kodein.di.instance
@@ -37,11 +38,12 @@ private tailrec fun runExecutor(di: DI, attemptCounts: Int = 1) {
     val executorCheckTime by di.instance<Long>("executor-check-millis")
 
     val executor by di.instance<ExecutorLoop>()
+    val exporterService by di.instance<ExporterService>()
 
     runCatching {
         // schedule task
-        executor.schedule(minutes = delayMinutes, name = "hello-task") {
-            println("Hello world")
+        executor.schedule(minutes = delayMinutes, name = "export-task") {
+            exporterService.executeExports()
         }
         // and periodically check if the executor is alive
         while (!executor.isShutdown && !executor.isTerminated) {

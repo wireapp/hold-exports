@@ -11,9 +11,9 @@ class EventParser(
 
     internal companion object : KLogging() {
         val events = mapOf(
-            "conversation.create" to ConversationEvent.Create::class,
-            "conversation.member-join" to ConversationEvent.MemberJoin::class,
-            "conversation.member-leave" to ConversationEvent.MemberLeave::class,
+            "conversation.create" to ConversationEvent.SystemEvent.Create::class,
+            "conversation.member-join" to ConversationEvent.SystemEvent.MemberJoin::class,
+            "conversation.member-leave" to ConversationEvent.SystemEvent.MemberLeave::class,
             // events
             "conversation.otr-message-add.delete-text" to ConversationEvent.OtrEvent.DeleteText::class,
             "conversation.otr-message-add.reaction" to ConversationEvent.OtrEvent.Reaction::class,

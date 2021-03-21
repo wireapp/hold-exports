@@ -11,7 +11,8 @@ import java.time.Instant
 import java.util.UUID
 
 class RawEventsRepository(
-    private val nowProvider: TimeProvider<Instant>
+    private val nowProvider: TimeProvider<Instant>,
+    private val batchSize: Int = 100
 ) {
 
     private companion object : KLogging()
@@ -23,6 +24,7 @@ class RawEventsRepository(
         logger.debug { "Loading events waiting for export." }
 
         Events.select { Events.exportedTime.isNull() }
+            .limit(batchSize)
             .map { mapEvent(it) }
             .also { logger.debug { "${it.size} events loaded." } }
     }

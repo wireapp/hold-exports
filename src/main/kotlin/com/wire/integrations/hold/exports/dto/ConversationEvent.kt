@@ -12,37 +12,42 @@ sealed class ConversationEvent {
     abstract val convId: UUID
     abstract val type: String
 
-    data class Create(
-        override val id: UUID,
-        override val convId: UUID,
-        override val type: String = "conversation.create",
-        val from: UUID,
-        val time: Instant
-    ) : ConversationEvent()
+    sealed class SystemEvent : ConversationEvent() {
+        abstract val time: Instant
+        abstract val from: UUID
 
-    data class MemberJoin(
-        override val id: UUID,
-        override val convId: UUID,
-        override val type: String = "conversation.member-join",
-        val conversation: Conversation,
-        val from: UUID,
-        val time: Instant,
-        val users: List<UUID>
-    ) : ConversationEvent()
+        data class Create(
+            override val id: UUID,
+            override val convId: UUID,
+            override val type: String = "conversation.create",
+            override val from: UUID,
+            override val time: Instant
+        ) : SystemEvent()
 
-    data class MemberLeave(
-        override val id: UUID,
-        override val convId: UUID,
-        override val type: String = "conversation.member-leave",
-        val conversation: Conversation,
-        val from: UUID,
-        val time: Instant,
-        val users: List<UUID>
-    ) : ConversationEvent()
+        data class MemberJoin(
+            override val id: UUID,
+            override val convId: UUID,
+            override val type: String = "conversation.member-join",
+            override val from: UUID,
+            override val time: Instant,
+            val conversation: Conversation,
+            val users: List<UUID>
+        ) : SystemEvent()
 
-    data class Conversation(
-        val id: UUID
-    )
+        data class MemberLeave(
+            override val id: UUID,
+            override val convId: UUID,
+            override val type: String = "conversation.member-leave",
+            override val from: UUID,
+            override val time: Instant,
+            val conversation: Conversation,
+            val users: List<UUID>
+        ) : SystemEvent()
+
+        data class Conversation(
+            val id: UUID
+        )
+    }
 
     sealed class OtrEvent : ConversationEvent() {
         abstract val messageId: UUID
