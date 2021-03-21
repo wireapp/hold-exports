@@ -40,6 +40,10 @@ val di = DI {
         getEnv("EXECUTOR_TASKS_MINUTES")?.toLong() ?: 1 // default execute with 1 minute delay
     }
 
+    bind<Int>("events-batch-size") with singleton {
+        getEnv("EVENTS_BATCH_SIZE")?.toInt() ?: 100
+    }
+
     bind<ExecutorLoop>() with provider {
         ExecutorLoop(corePoolSize = instance("executor-cores"))
     }
@@ -62,7 +66,9 @@ val di = DI {
     }
     bind<TimeProvider<Instant>>() with singleton { InstantTimeProvider }
 
-    bind<RawEventsRepository>() with singleton { RawEventsRepository(instance()) }
+    bind<RawEventsRepository>() with singleton {
+        RawEventsRepository(instance(), batchSize = instance("events-batch-size"))
+    }
 
     bind<EventParser>() with singleton { EventParser(instance()) }
 

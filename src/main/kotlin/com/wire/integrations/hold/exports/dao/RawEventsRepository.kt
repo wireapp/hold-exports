@@ -12,7 +12,7 @@ import java.util.UUID
 
 class RawEventsRepository(
     private val nowProvider: TimeProvider<Instant>,
-    private val batchSize: Int = 100
+    private val batchSize: Int
 ) {
 
     private companion object : KLogging()
