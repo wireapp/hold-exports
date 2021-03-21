@@ -1,10 +1,10 @@
 package com.wire.integrations.hold.exports.utils
 
-import mu.KLogger
 import mu.KLogging
 
-val catchingLogger: KLogger
-    get() = KLogging().logger("com.wire.integrations.hold.exports")
+fun createLogger(name: String) = KLogging().logger("com.wire.integrations.hold.exports.${name}")
+
+val catchingLogger = createLogger("extensions")
 
 inline fun <T, R> Iterable<T>.mapCatching(transform: (T) -> R?, crossinline errorLog: (T) -> String): List<R> =
     mapNotNull { item ->

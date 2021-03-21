@@ -1,6 +1,7 @@
 package com.wire.integrations.hold.exports
 
 import mu.KLogging
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeUnit
 class ExecutorLoop(
     private val corePoolSize: Int = 1,
     private val executor: ScheduledExecutorService = Executors.newScheduledThreadPool(corePoolSize)
-) {
+) : ExecutorService by executor {
 
     private companion object : KLogging()
 

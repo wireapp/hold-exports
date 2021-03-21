@@ -30,7 +30,15 @@ val di = DI {
         getEnv("EXECUTOR_CORES")?.toInt() ?: 1
     }
 
-    bind<ExecutorLoop>() with singleton {
+    bind<Long>("executor-check-millis") with singleton {
+        getEnv("EXECUTOR_CHECK_MILLIS")?.toLong() ?: 60_000 // default 1 minute
+    }
+
+    bind<Long>("executor-tasks-minutes") with singleton {
+        getEnv("EXECUTOR_TASKS_MINUTES")?.toLong() ?: 1 // default execute with 1 minute delay
+    }
+
+    bind<ExecutorLoop>() with provider {
         ExecutorLoop(corePoolSize = instance("executor-cores"))
     }
 
@@ -59,11 +67,11 @@ val di = DI {
     // TODO maybe proxy will be needed
     bind<Client>() with singleton { JerseyClientBuilder.build(); }
 
+    // TODO maybe allow loading this as program arguments
     bind<WireCredentials>() with singleton {
-        // TODO consider loading this from properties
         WireCredentials(
-            email = getEnv("WIRE_EMAIL") ?: "wire",
-            password = getEnv("WIRE_PASSWORD") ?: "test"
+            email = requireNotNull(getEnv("WIRE_EMAIL")),
+            password = requireNotNull(getEnv("WIRE_PASSWORD"))
         )
     }
 
