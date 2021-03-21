@@ -17,6 +17,7 @@ class ConsoleLogExporter : Exporter {
 
     private fun print(string: String) = logger.info {
         """
+            
             Printing data:
             --------------
             $string
