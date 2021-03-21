@@ -38,6 +38,11 @@ class RawEventsRepository(
             where = { Events.messageId.inList(messages) },
             body = { it[exportedTime] = now }
         )
+//        // we might delete the data as well
+//        // depending on the exported strategy
+//        Events.deleteWhere {
+//            Events.messageId.inList(messages)
+//        }
     }
 
     private fun mapEvent(it: ResultRow) = RawEvent(

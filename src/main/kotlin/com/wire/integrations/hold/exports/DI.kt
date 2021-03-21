@@ -12,6 +12,8 @@ import com.wire.integrations.hold.exports.convert.EventParser
 import com.wire.integrations.hold.exports.dao.RawEventsRepository
 import com.wire.integrations.hold.exports.dto.DatabaseConfiguration
 import com.wire.integrations.hold.exports.dto.WireCredentials
+import com.wire.integrations.hold.exports.export.ConsoleLogExporter
+import com.wire.integrations.hold.exports.export.Exporter
 import com.wire.integrations.hold.exports.service.ExporterService
 import com.wire.integrations.hold.exports.service.ProcessingService
 import com.wire.integrations.hold.exports.utils.JerseyClientBuilder
@@ -97,4 +99,8 @@ val di = DI {
 
     bind<ProcessingService>() with singleton { ProcessingService(instance(), instance(), instance()) }
     bind<ExporterService>() with singleton { ExporterService(instance(), instance(), instance()) }
+
+    bind<ConsoleLogExporter>() with singleton { ConsoleLogExporter() }
+    // TODO bind correct one depending on the required implementation
+    bind<Exporter>() with singleton { instance<ConsoleLogExporter>() }
 }

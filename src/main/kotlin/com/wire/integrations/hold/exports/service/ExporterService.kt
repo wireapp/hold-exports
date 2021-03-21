@@ -22,6 +22,11 @@ class ExporterService(
         logger.debug { "Loading events to export." }
         val toExport = processingService.loadAndProcess()
 
+        if (toExport.isEmpty()) {
+            logger.debug { "No data to export. Skipping." }
+            return
+        }
+
         logger.debug { "Exporting ${toExport.size} events." }
         val exported = exporter.export(toExport)
 
@@ -47,12 +52,14 @@ class ExporterService(
             errorLog = { "It was not possible to delete file: ${it.absolutePath}." }
         )
         logger.debug { "Deleted ${filesDeleted.size} temporary files." }
+
         if (filesDeleted.size != toClean.size) {
             logger.warn { "${toClean.size - filesDeleted.size} files were not deleted!" }
             val missing = toClean.mapToSet { it.absolutePath }.subtract(filesDeleted)
                 .joinToString("\n")
             logger.warn { "See following list:\n${missing}" }
         }
+
         logger.debug { "Task finished." }
     }
 }
