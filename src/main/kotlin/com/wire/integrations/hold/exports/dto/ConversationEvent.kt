@@ -177,7 +177,7 @@ sealed class ConversationEvent {
                     override val time: Instant,
                     override val type: String = "conversation.otr-message-add.new-audio",
                     override val assetKey: String,
-                    override val assetToken: String,
+                    override val assetToken: String?,
                     override val mimeType: String,
                     override val otrKey: ByteArray,
                     override val sha256: ByteArray,

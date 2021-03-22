@@ -39,11 +39,11 @@ val di = DI {
     }
 
     bind<Long>("executor-tasks-seconds") with singleton {
-        getEnv("EXECUTOR_TASKS_SECONDS")?.toLong() ?: 5
+        getEnv("EXECUTOR_TASKS_SECONDS")?.toLong() ?: 60
     }
 
     bind<Int>("events-batch-size") with singleton {
-        getEnv("EVENTS_BATCH_SIZE")?.toInt() ?: 50
+        getEnv("EVENTS_BATCH_SIZE")?.toInt() ?: 500
     }
 
     bind<ExecutorLoop>() with provider {
