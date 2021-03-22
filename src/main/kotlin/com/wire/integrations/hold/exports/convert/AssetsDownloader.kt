@@ -44,6 +44,8 @@ class AssetsDownloader(private val apiProvider: () -> API) {
             api.downloadAsset(asset.assetKey, asset.assetToken)
         }.onFailure {
             logger.error { "Download failed for second time, throwing. ${it.message}." }
+        }.onSuccess {
+            logger.debug { "Downloaded asset ${asset.messageId}." }
         }.getOrThrow()
     }
 }

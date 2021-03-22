@@ -1,15 +1,32 @@
-{
-  "messageId": "fff6786b-bfb4-4881-a79e-575f52236f47",
-  "conversationId": "799e7fa4-c1dc-4732-ae0a-0c29a70859c1",
-  "clientId": "463eb090a0f36714",
-  "userId": "8ae7262c-949a-4c4d-87c4-1b3eec38cd7f",
-  "time": "2020-06-30T18:56:54.052Z",
-  "assetKey": "3-1-c2b8a396-d9ae-4231-a2db-e3abd7076147",
-  "assetToken": "L-KXNpiTihp_hkdM2Iz55Q==",
-  "otrKey": "YI9+5ORY9rMuo7y7aenmMgt6wNBkEIviTZSV9mrGPOk=",
-  "mimeType": "audio/x-wav",
-  "size": 441044,
-  "sha256": "bHMyytapTyOdIUU6Lh4StR+fCyN3kkJMrLUZEv7IoNM=",
-  "name": "C756370.wav",
-  "duration": 10000
-}
+[
+  {
+    "messageId": "fff6786b-bfb4-4881-a79e-575f52236f47",
+    "conversationId": "799e7fa4-c1dc-4732-ae0a-0c29a70859c1",
+    "clientId": "463eb090a0f36714",
+    "userId": "8ae7262c-949a-4c4d-87c4-1b3eec38cd7f",
+    "time": "2020-06-30T18:56:54.052Z",
+    "assetKey": "3-1-c2b8a396-d9ae-4231-a2db-e3abd7076147",
+    "assetToken": "L-KXNpiTihp_hkdM2Iz55Q==",
+    "otrKey": "YI9+5ORY9rMuo7y7aenmMgt6wNBkEIviTZSV9mrGPOk=",
+    "mimeType": "audio/x-wav",
+    "size": 441044,
+    "sha256": "bHMyytapTyOdIUU6Lh4StR+fCyN3kkJMrLUZEv7IoNM=",
+    "name": "C756370.wav",
+    "duration": 10000
+  },
+  {
+    "messageId": "fed25a83-b39b-4a48-be75-6fcaf1ee375c",
+    "conversationId": "d9ebba3e-cf3b-42be-9bfd-620ec70d1fc2",
+    "clientId": "d6af9fa74ce4ffd3",
+    "userId": "a8bac76e-40e3-4056-b554-3ff514fccd75",
+    "time": "2020-05-28T23:01:26.864Z",
+    "assetKey": "3-1-c0a9e9a0-2678-4f00-9edb-dede60fa7aad",
+    "assetToken": "YOnIcqW2rrYIwq2TMOi0BA==",
+    "otrKey": "LkHqIw5QfzKkK18tm6x0PBrhw3EEPCRVF4d/Ysm6gnM=",
+    "mimeType": "audio/wav",
+    "size": 882044,
+    "sha256": "4kFGPieX0UDbOXurLwyJjt9ayyMv67G7H2lmR8SGL7o=",
+    "name": "C756348-audio.wav",
+    "duration": 20000
+  }
+]

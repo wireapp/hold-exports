@@ -15,13 +15,15 @@ sealed class ConversationEvent {
     sealed class SystemEvent : ConversationEvent() {
         abstract val time: Instant
         abstract val from: UUID
+        abstract val conversation: Conversation?
 
         data class Create(
             override val id: UUID,
             override val convId: UUID,
             override val type: String = "conversation.create",
             override val from: UUID,
-            override val time: Instant
+            override val time: Instant,
+            override val conversation: Conversation.Created?
         ) : SystemEvent()
 
         data class MemberJoin(
@@ -30,7 +32,7 @@ sealed class ConversationEvent {
             override val type: String = "conversation.member-join",
             override val from: UUID,
             override val time: Instant,
-            val conversation: Conversation,
+            override val conversation: Conversation.Changed,
             val users: List<UUID>
         ) : SystemEvent()
 
@@ -40,13 +42,30 @@ sealed class ConversationEvent {
             override val type: String = "conversation.member-leave",
             override val from: UUID,
             override val time: Instant,
-            val conversation: Conversation,
+            override val conversation: Conversation.Changed,
             val users: List<UUID>
         ) : SystemEvent()
 
-        data class Conversation(
-            val id: UUID
-        )
+        sealed class Conversation {
+            abstract val id: UUID
+
+            data class Changed(
+                override val id: UUID
+            ) : Conversation()
+
+            data class Created(
+                override val id: UUID,
+                val creator: UUID,
+                val members: List<Member>,
+                val name: String?
+            ) : Conversation() {
+                data class Member(
+                    val id: UUID,
+                    val status: Int?
+                )
+            }
+
+        }
     }
 
     sealed class OtrEvent : ConversationEvent() {
@@ -86,6 +105,8 @@ sealed class ConversationEvent {
         sealed class Text : OtrEvent() {
             abstract val text: String
             abstract val mentions: List<Mention>
+            abstract val expireAfterMillis: Long?
+            abstract val quotedMessageId: UUID?
 
             data class NewText(
                 override val messageId: UUID,
@@ -95,7 +116,9 @@ sealed class ConversationEvent {
                 override val time: Instant,
                 override val type: String = "conversation.otr-message-add.new-text",
                 override val text: String,
-                override val mentions: List<Mention>
+                override val mentions: List<Mention>,
+                override val expireAfterMillis: Long?,
+                override val quotedMessageId: UUID?,
             ) : Text()
 
             data class EditText(
@@ -107,7 +130,9 @@ sealed class ConversationEvent {
                 override val type: String = "conversation.otr-message-add.edit-text",
                 override val text: String,
                 override val mentions: List<Mention>,
-                val replacingMessageId: UUID
+                override val expireAfterMillis: Long?,
+                override val quotedMessageId: UUID?,
+                val replacingMessageId: UUID,
             ) : Text()
 
             data class Mention(

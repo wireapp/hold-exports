@@ -16,13 +16,7 @@ class ConsoleLogExporter : Exporter {
     private companion object : KLogging()
 
     private fun print(string: String) = logger.info {
-        """
-            
-            Printing data:
-            --------------
-            $string
-            ______________
-        """.trimIndent()
+        "\nPrinting data:\n--------------\n${string}\n--------------"
     }
 
     override fun export(events: Iterable<EnrichedEvent>): Set<UUID> {
@@ -60,13 +54,16 @@ class ConsoleLogExporter : Exporter {
                 "${e.userId} sent reaction: ${e.emoji}."
             }
             is ConversationEvent.OtrEvent.Text.EditText -> {
-                "${e.userId} edited message ${e.replacingMessageId} with new text: \"${e.text}\"."
+                val suffix = e.quotedMessageId?.let { " quoting message $it." } ?: ""
+                "${e.userId} edited message ${e.replacingMessageId} with new text: \"${e.text}\"$suffix"
             }
             is ConversationEvent.OtrEvent.Text.NewText -> {
-                "${e.userId} set text: \"${e.text}\"."
+                val suffix = e.quotedMessageId?.let { " quoting message $it." } ?: ""
+                "${e.userId} sent text: \"${e.text}\"$suffix"
             }
             is ConversationEvent.SystemEvent.Create -> {
-                "Conversation ${e.convId} created."
+                val name = e.conversation?.name ?: e.convId
+                "Conversation $name created for user ${e.from}."
             }
             is ConversationEvent.SystemEvent.MemberJoin -> {
                 "Following users ${e.users.joinToString(", ")} joined the conversation ${e.conversation.id}."

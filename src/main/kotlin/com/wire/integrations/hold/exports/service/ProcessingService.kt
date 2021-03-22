@@ -56,13 +56,10 @@ class ProcessingService(
                     }
                 }
             },
-            errorLog = { (rawEvent, conversationEvent) ->
-                """
-                       ExportService: error while processing events.
-                       Raw: $rawEvent
-                       Conversation: $conversationEvent 
-                """.trimIndent()
-            }
+            errorLog = { (rawEvent, _) ->
+                "ExportService: error while processing event - ID: ${rawEvent.messageId}, Type: ${rawEvent.type}."
+            },
+            logStackTrace = true
         )
 
         logger.debug { "Successfully processed entities ${processed.size}." }

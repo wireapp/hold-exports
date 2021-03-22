@@ -35,15 +35,15 @@ val di = DI {
     }
 
     bind<Long>("executor-check-millis") with singleton {
-        getEnv("EXECUTOR_CHECK_MILLIS")?.toLong() ?: 60_000 // default 1 minute
+        getEnv("EXECUTOR_CHECK_MILLIS")?.toLong() ?: 60_000 // 1 minute
     }
 
-    bind<Long>("executor-tasks-minutes") with singleton {
-        getEnv("EXECUTOR_TASKS_MINUTES")?.toLong() ?: 1 // default execute with 1 minute delay
+    bind<Long>("executor-tasks-seconds") with singleton {
+        getEnv("EXECUTOR_TASKS_SECONDS")?.toLong() ?: 5
     }
 
     bind<Int>("events-batch-size") with singleton {
-        getEnv("EVENTS_BATCH_SIZE")?.toInt() ?: 100
+        getEnv("EVENTS_BATCH_SIZE")?.toInt() ?: 50
     }
 
     bind<ExecutorLoop>() with provider {
@@ -60,12 +60,16 @@ val di = DI {
     }
 
     bind<DatabaseConfiguration>() with singleton {
+        val db = getEnv("POSTGRES_DB") ?: "hold"
+        val dbHost = getEnv("POSTGRES_HOST") ?: "localhost:5432"
+
         DatabaseConfiguration(
             userName = getEnv("POSTGRES_USER") ?: "wire",
             password = getEnv("POSTGRES_PASSWORD") ?: "wire-password",
-            url = getEnv("POSTGRES_URL") ?: "localhost:5432/hold"
+            url = "jdbc:postgresql://${dbHost}/${db}"
         )
     }
+
     bind<TimeProvider<Instant>>() with singleton { InstantTimeProvider }
 
     bind<RawEventsRepository>() with singleton {

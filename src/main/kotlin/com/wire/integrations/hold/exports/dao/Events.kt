@@ -4,8 +4,8 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.`java-time`.timestamp
 
 object Events : Table("events") {
-    val messageId = uuid("messageId")
-    val conversationId = uuid("conversationId")
+    val messageId = uuid("messageid")
+    val conversationId = uuid("conversationid")
     val type = text("type")
     val payload = text("payload")
     val time = timestamp("time")
