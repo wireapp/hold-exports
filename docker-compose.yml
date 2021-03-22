@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:13
+    # just for local development
+    environment:
+      - POSTGRES_USER=wire
+      - POSTGRES_PASSWORD=wire-password
+      - POSTGRES_DB=hold
+    ports:
+      - 5432:5432
+    volumes:
+      - hold-export-db:/var/lib/postgresql/data/
+
+volumes:
+  hold-export-db:

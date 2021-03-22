@@ -1,3 +1,4 @@
+legal_hold_*.sql
 !.env
 
 # Created by https://www.gitignore.io/api/java,kotlin,jetbrains+all
