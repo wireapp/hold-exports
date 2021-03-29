@@ -1,6 +1,6 @@
 package com.wire.integrations.hold.exports.service
 
-import com.wire.integrations.hold.exports.convert.AssetsFileDownloader
+import com.wire.integrations.hold.exports.asset.AssetsFileDownloader
 import com.wire.integrations.hold.exports.convert.EventParser
 import com.wire.integrations.hold.exports.dao.RawEventsRepository
 import com.wire.integrations.hold.exports.dto.ConversationEvent

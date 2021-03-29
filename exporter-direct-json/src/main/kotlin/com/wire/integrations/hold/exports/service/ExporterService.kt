@@ -1,8 +1,8 @@
 package com.wire.integrations.hold.exports.service
 
+import com.wire.integrations.hold.exports.Exporter
 import com.wire.integrations.hold.exports.dao.RawEventsRepository
 import com.wire.integrations.hold.exports.dto.EnrichedEvent
-import com.wire.integrations.hold.exports.export.Exporter
 import com.wire.integrations.hold.exports.utils.mapCatching
 import mu.KLogging
 import pw.forst.tools.katlib.mapToSet

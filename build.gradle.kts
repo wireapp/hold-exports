@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     kotlin("jvm") version "1.4.31"
     id("net.nemerosa.versioning") version "2.14.0"
@@ -55,6 +53,9 @@ subprojects {
         // logging
         implementation("io.github.microutils", "kotlin-logging", "2.0.4")
         implementation("ch.qos.logback", "logback-classic", "1.3.0-alpha5")
+
+        // DI
+        implementation("org.kodein.di", "kodein-di-jvm", "7.4.0")
 
         // tests
         testImplementation("io.mockk", "mockk", "1.10.6")

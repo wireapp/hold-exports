@@ -10,7 +10,6 @@ import java.lang.Thread.sleep
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
-val logger = createLogger("Main")
 
 fun main() {
     logger.info { "Initializing application." }
@@ -59,3 +58,5 @@ private tailrec fun runExecutor(di: DI, attemptCounts: Int = 1) {
     // if not, execute the loop again
     runExecutor(di, attemptCounts + 1)
 }
+
+private val logger = createLogger("Main")
