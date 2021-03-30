@@ -52,7 +52,9 @@ subprojects {
 
         // logging
         implementation("io.github.microutils", "kotlin-logging", "2.0.4")
-        implementation("ch.qos.logback", "logback-classic", "1.3.0-alpha5")
+        implementation("ch.qos.logback", "logback-classic", "1.2.3")
+        // if-else in logback.xml
+        implementation("org.codehaus.janino", "janino", "3.1.3")
 
         // DI
         implementation("org.kodein.di", "kodein-di-jvm", "7.4.0")

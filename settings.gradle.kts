@@ -1,6 +1,5 @@
 rootProject.name = "hold-exports"
 
 include("common")
-include("server")
-include("exporter-direct-json")
-include("exporter-json")
+include("db-exporter-json")
+include("api-exporter-json")

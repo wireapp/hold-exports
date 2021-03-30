@@ -10,6 +10,7 @@ import com.wire.integrations.hold.exports.api.WireApi
 import com.wire.integrations.hold.exports.asset.AssetsDownloader
 import com.wire.integrations.hold.exports.asset.AssetsFileDownloader
 import com.wire.integrations.hold.exports.convert.EventParser
+import com.wire.integrations.hold.exports.dto.ApplicationInfo
 import com.wire.integrations.hold.exports.dto.WireCredentials
 import com.wire.integrations.hold.exports.utils.JerseyClientBuilder
 import org.kodein.di.DI
@@ -20,6 +21,7 @@ import org.kodein.di.singleton
 import pw.forst.tools.katlib.InstantTimeProvider
 import pw.forst.tools.katlib.TimeProvider
 import pw.forst.tools.katlib.getEnv
+import java.io.File
 import java.time.Instant
 import javax.ws.rs.client.Client
 
@@ -32,6 +34,14 @@ object CommonDi {
      */
     val module by lazy {
         DI.Module("common") {
+            bind<ApplicationInfo>() with singleton {
+                val version = getEnv("RELEASE_FILE_PATH")
+                    ?.let { runCatching { File(it).readText() }.getOrNull() }
+                    ?.trim()
+                    ?: "development"
+                ApplicationInfo(version)
+            }
+
             bind<TimeProvider<Instant>>() with singleton { InstantTimeProvider }
 
             bind<ObjectMapper>() with singleton {

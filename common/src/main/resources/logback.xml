@@ -1,0 +1,50 @@
+<configuration>
+    <appender name="local" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{ISO8601} %5level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.wire.integrations.hold.exports.monitoring.JsonLoggingLayout"/>
+        </encoder>
+    </appender>
+
+    <appender name="fileJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_LOG_PATH:-.}/app.log.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>app-%d{yyyy-MM-dd}.%i.log.json</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <immediateFlush>false</immediateFlush>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.wire.integrations.hold.exports.monitoring.JsonLoggingLayout"/>
+        </encoder>
+    </appender>
+
+    <!--  if this is production json layout, store the logs in files as well  -->
+    <if condition='"${PRODUCTION_LOGGING:-false}".equalsIgnoreCase("true")'>
+        <then>
+            <root level="${GLOBAL_LOG_LEVEL:-INFO}">
+                <appender-ref ref="json"/>
+                <if condition='"${ENABLE_FILE_LOG:-false}".equalsIgnoreCase("true")'>
+                    <then>
+                        <appender-ref ref="fileJson"/>
+                    </then>
+                </if>
+            </root>
+
+            <logger name="com.wire" level="${LOG_LEVEL:-TRACE}"/>
+        </then>
+        <else>
+            <root level="DEBUG">
+                <appender-ref ref="local"/>
+            </root>
+            <logger name="io.netty" level="INFO"/>
+
+            <logger name="com.wire" level="TRACE"/>
+        </else>
+    </if>
+</configuration>
