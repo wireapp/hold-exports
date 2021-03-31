@@ -81,7 +81,7 @@ object CommonDi {
 
             bind<AssetsDownloader>() with singleton { AssetsDownloader(provider()) }
             bind<AssetsFileDownloader>() with singleton { AssetsFileDownloader(instance()) }
-
+            bind<EventEnricher>() with singleton { EventEnricher(instance(), instance()) }
             bind<ConsoleLogExporter>() with singleton { ConsoleLogExporter() }
         }
     }

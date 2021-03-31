@@ -3,6 +3,7 @@ package com.wire.integrations.hold.exports.service
 import com.wire.integrations.hold.exports.Exporter
 import com.wire.integrations.hold.exports.dao.RawEventsRepository
 import com.wire.integrations.hold.exports.dto.EnrichedEvent
+import com.wire.integrations.hold.exports.dto.ExportResult
 import com.wire.integrations.hold.exports.utils.mapCatching
 import mu.KLogging
 import pw.forst.tools.katlib.mapToSet
@@ -30,8 +31,9 @@ class ExporterService(
         logger.debug { "Exporting ${toExport.size} events." }
         val exported = exporter.export(toExport)
 
+        val successful = exported.filterIsInstance<ExportResult.Success>().mapToSet { it.messageId }
         logger.debug { "Exported ${exported.size} events." }
-        if (exported.size != toExport.size) {
+        if (successful.size != toExport.size) {
             logger.warn { "Some events were not exported." }
             val missing = toExport.mapToSet { it.rawEvent.messageId }.subtract(exported)
                 .joinToString(", ")
@@ -39,7 +41,7 @@ class ExporterService(
         }
 
         logger.debug { "Saving exported events." }
-        rawEventsRepository.markExported(exported)
+        rawEventsRepository.markExported(successful)
         logger.debug { "Exported events saved." }
 
         val toClean = toExport

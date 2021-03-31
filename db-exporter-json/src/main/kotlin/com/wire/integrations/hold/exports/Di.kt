@@ -51,6 +51,6 @@ val di = DI {
 
     bind<Exporter>() with singleton { instance<ConsoleLogExporter>() }
 
-    bind<ProcessingService>() with singleton { ProcessingService(instance(), instance(), instance()) }
+    bind<ProcessingService>() with singleton { ProcessingService(instance(), instance()) }
     bind<ExporterService>() with singleton { ExporterService(instance(), instance(), instance()) }
 }

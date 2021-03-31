@@ -1,5 +1,7 @@
-package com.wire.integrations.hold.exports
+package com.wire.integrations.hold.exports.server
 
+import com.wire.integrations.hold.exports.ProcessingService
+import com.wire.integrations.hold.exports.di
 import com.wire.integrations.hold.exports.dto.ApplicationInfo
 import com.wire.integrations.hold.exports.dto.RawEvent
 import io.ktor.application.Application
@@ -16,12 +18,12 @@ import org.kodein.di.instance
  */
 fun Application.installRouting() = routing {
     val info by di.instance<ApplicationInfo>()
-    val exportService by di.instance<ExportService>()
+    val exportService by di.instance<ProcessingService>()
 
     get("/export") {
         val event = call.receive<RawEvent>()
         // todo auth
-        exportService.export(event)
+        exportService.process(event)
         call.respond(HttpStatusCode.OK)
     }
 

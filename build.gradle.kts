@@ -36,6 +36,17 @@ subprojects {
     repositories {
         jcenter()
         mavenCentral()
+
+        // lithium
+        maven {
+            url = uri("https://packagecloud.io/dkovacevic/helium/maven2")
+        }
+        maven {
+            url = uri("https://packagecloud.io/dkovacevic/xenon/maven2")
+        }
+        maven {
+            url = uri("https://packagecloud.io/dkovacevic/cryptobox4j/maven2")
+        }
     }
 
     dependencies {

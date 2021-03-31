@@ -3,12 +3,10 @@ package com.wire.integrations.hold.exports.server
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.wire.integrations.hold.exports.di
-import com.wire.integrations.hold.exports.installRouting
 import com.wire.integrations.hold.exports.monitoring.CALL_ID
 import com.wire.integrations.hold.exports.monitoring.PATH
 import com.wire.integrations.hold.exports.monitoring.REMOTE_HOST
 import com.wire.integrations.hold.exports.utils.createLogger
-import com.wire.integrations.hold.exports.utils.determineRealIp
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CallId

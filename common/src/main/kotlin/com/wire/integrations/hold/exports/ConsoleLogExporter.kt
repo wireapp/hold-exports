@@ -2,9 +2,9 @@ package com.wire.integrations.hold.exports
 
 import com.wire.integrations.hold.exports.dto.ConversationEvent
 import com.wire.integrations.hold.exports.dto.EnrichedEvent
+import com.wire.integrations.hold.exports.dto.ExportResult
 import mu.KLogging
 import pw.forst.tools.katlib.mapToSet
-import java.util.UUID
 
 /**
  * Default implementation of [Exporter] that simply prints data to console.
@@ -19,7 +19,14 @@ class ConsoleLogExporter : Exporter {
         "\nPrinting data:\n--------------\n${string}\n--------------"
     }
 
-    override fun export(events: Iterable<EnrichedEvent>): Set<UUID> {
+    override fun export(event: EnrichedEvent): ExportResult {
+        val conv = "Conversation: ${event.rawEvent.conversationId}"
+        val hashes = (0..conv.length).joinToString("") { "#" }
+        print("${hashes}\n${conv}\n${hashes}\n${buildStringForEvent(event)}\n")
+        return ExportResult.Success(event.rawEvent.messageId)
+    }
+
+    override fun export(events: Iterable<EnrichedEvent>): Set<ExportResult> {
         val stringToPrint = events.groupBy { it.rawEvent.conversationId }
             .map { (conversationId, events) ->
                 val conversationStrings = events
@@ -31,7 +38,7 @@ class ConsoleLogExporter : Exporter {
             }.joinToString("\n")
 
         print(stringToPrint)
-        return events.mapToSet { it.rawEvent.messageId }
+        return events.mapToSet { ExportResult.Success(it.rawEvent.messageId) }
     }
 
     private fun buildStringForEvent(event: EnrichedEvent): String {

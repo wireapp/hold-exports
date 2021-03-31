@@ -1,4 +1,4 @@
-package com.wire.integrations.hold.exports.utils
+package com.wire.integrations.hold.exports.server
 
 import io.ktor.features.origin
 import io.ktor.request.ApplicationRequest
